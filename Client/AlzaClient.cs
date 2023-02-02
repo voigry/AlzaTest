@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AlzaTest.Client
 {
-    internal class AlzaClient: IDisposable, IAlzaClient
+    internal class AlzaClient : IDisposable, IAlzaClient
     {
         readonly RestClient _client;
         public AlzaClient()

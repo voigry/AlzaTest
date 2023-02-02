@@ -11,8 +11,9 @@ namespace AlzaTest.Loging
     [TestFixture]
     internal class Logger
     {
-        public Logger() {
-            
+        public Logger()
+        {
+
         }
 
         private static String GetTimeNow()

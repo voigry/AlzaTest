@@ -11,6 +11,6 @@ namespace AlzaTest.Test_Data
         string JobDescription { get; }
         string[] WhatWilYouDo { get; }
         string[] WhatIsExpectedFromYou { get; }
-        string[] WhatYouWillGet { get;}
+        string[] WhatYouWillGet { get; }
     }
 }

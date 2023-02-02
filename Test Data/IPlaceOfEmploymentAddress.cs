@@ -9,7 +9,7 @@ namespace AlzaTest.Test_Data
     internal interface IPlaceOfEmploymentAddress
     {
         public string Name { get; }
-        
+
         public string StreetName { get; }
 
         public string StreetNumber { get; }

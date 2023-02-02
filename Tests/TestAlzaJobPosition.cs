@@ -20,7 +20,7 @@ using System.Text.RegularExpressions;
 namespace AlzaTest.Tests
 {
     [TestFixtureSource(typeof(AlzaData), nameof(AlzaData.FixtureParams))]
-    internal class TestAlzaJobPosition: AlzaBaseTest
+    internal class TestAlzaJobPosition : AlzaBaseTest
     {
         private RestClient alzaClient;
         private readonly string _segment;
@@ -55,7 +55,7 @@ namespace AlzaTest.Tests
             Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.OK), $"Segement: {_segment}");
 
 
-            
+
             //InitialRecord initialRecord = await alzaClient.GetJsonAsync<InitialRecord>(_segment, args);
 
             /*

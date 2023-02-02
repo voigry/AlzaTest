@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AlzaTest.Test_Data
 {
-    internal class JobItemsSoftwarovyTester: IJobItems
+    internal class JobItemsSoftwarovyTester : IJobItems
     {
         public JobItemsSoftwarovyTester()
         {

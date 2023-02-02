@@ -15,7 +15,7 @@ namespace AlzaTest.Test_Data
         /// Data for job position 
         /// </summary>
         /// 
-        public PlaceOfEmploymentCZPraha() 
+        public PlaceOfEmploymentCZPraha()
         {
 
         }
