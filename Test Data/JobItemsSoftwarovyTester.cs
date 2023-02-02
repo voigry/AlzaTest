@@ -7,15 +7,18 @@ using System.Threading.Tasks;
 
 namespace AlzaTest.Test_Data
 {
-
-    static class JobItems
+    internal class JobItemsSoftwarovyTester: IJobItems
     {
-        public static string JobDescription
+        public JobItemsSoftwarovyTester()
+        {
+
+        }
+        public string JobDescription
         {
             get => "Do týmu našich Quality Assurance Engineerů hledáme další schopné testery. Čeká Tě testování naší webové appky, budeš tedy zajišťovat, aby vše klapalo jak má :). Co Ti za to nabídneme? Profesní růst, moderní technologie, zkušenost s jedničky v e-commerce na trhu a skvělý kolektiv k tomu!";
         }
 
-        public static string[] WhatWilYouDo
+        public string[] WhatWilYouDo
         {
             get => new string[]
             {
@@ -24,8 +27,8 @@ namespace AlzaTest.Test_Data
                 "Údržba testovacího prostředí a psaní dokumentace",
                 "A nakonec budete společně vývojovým týmem nastavovat preventivní opatření aby se chybám předcházelo :)"
             };
-        } 
-        public static string[] WhatIsExpectedFromYou
+        }
+        public string[] WhatIsExpectedFromYou
         {
             get => new string[]
             {
@@ -36,7 +39,7 @@ namespace AlzaTest.Test_Data
                 "Malý bonus, pokud ses v praxi setkal/a s test management systémem a orientuješ se v C#, NUnit, .NET Core"
             };
         }
-        public static string[] WhatYouWillGet
+        public string[] WhatYouWillGet
         {
             get => new string[]
             {
@@ -48,8 +51,5 @@ namespace AlzaTest.Test_Data
                 "Flexibilní pracovní dobu a home office"
             };
         }
-
-        public record PositionItemsHref(JsonObject positionItems);
-
     }
 }
