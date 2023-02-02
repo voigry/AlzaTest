@@ -13,22 +13,29 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
+using AlzaTest.Deserializers;
+using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace AlzaTest.Tests
 {
     [TestFixtureSource(typeof(AlzaData), nameof(AlzaData.FixtureParams))]
-    public class TestAlzaJobPosition
+    internal class TestAlzaJobPosition: AlzaBaseTest
     {
         private RestClient alzaClient;
         private readonly string _segment;
         private readonly object _country;
+        private readonly IJobItems _jobItems;
+        private readonly IPlaceOfEmploymentAddress _placeOfEmployment;
         record InitialRecord(string name, bool forStudents, JsonObject placeOfEmployment, JsonObject gestorUser, JsonObject executiveUser, JsonObject people, JsonObject positionItems);
 
 
-        public TestAlzaJobPosition(string segment, object country)
+        public TestAlzaJobPosition(string segment, object country, IJobItems jobItems, IPlaceOfEmploymentAddress placeOfEmployment)
         {
             _segment = segment;
             _country = country;
+            _jobItems = jobItems;
+            _placeOfEmployment = placeOfEmployment;
         }
 
         [SetUp]
@@ -64,80 +71,46 @@ namespace AlzaTest.Tests
             //Assert.That(name, Is.EqualTo("Softwarový Tester"));
 
         }
+        [Test]
+        public async Task JobShouldNotBeSuitableForStudents()
+        {
+            Assert.True(true);
+        }
 
         [Test]
         public async Task TestPopisPozice()
         {
-            var ActualJobDescription = (string)(await GetJobItems())["items"][0]["content"];
-            HtmlDocument doc = new HtmlDocument();
-            
-            doc.LoadHtml(ActualJobDescription);
-            var EncodedActualJobDescription = doc.DocumentNode.SelectSingleNode("//div[2]").InnerText;
-            Assert.That(EncodedActualJobDescription, Is.EqualTo(JobItems.JobDescription));
+            var ActualJobDescription = DecodeHtmlNodeToInnerText((string)(await GetJobItems(alzaClient, _segment))["items"][0]["content"], "//div[2]");
+
+            Assert.That(ActualJobDescription.ToLower(), Is.EqualTo(_jobItems.JobDescription.ToLower()));
+
+            Assert.That(ActualJobDescription, Is.EqualTo(_jobItems.JobDescription));
 
         }
         [Test]
         public async Task TestCoSeOdTebeOcekava()
         {
-            JsonArray ActualWhaIsExpectedFromYou = (JsonArray)(await GetJobItems())["items"][2]["subContent"];
+            JsonArray ActualWhaIsExpectedFromYou = (JsonArray)(await GetJobItems(alzaClient, _segment))["items"][2]["subContent"];
 
-            AssertJobDescriptions(ActualWhaIsExpectedFromYou, JobItems.WhatIsExpectedFromYou);
+            AssertJobDescriptions(ActualWhaIsExpectedFromYou, _jobItems.WhatIsExpectedFromYou);
 
         }
         [Test]
         public async Task TestCoBudesMitVsechnoPodPalcemADoCehojdes()
         {
-            JsonArray ActualWhatWilYouDo = (JsonArray)(await GetJobItems())["items"][1]["subContent"];
+            JsonArray ActualWhatWilYouDo = (JsonArray)(await GetJobItems(alzaClient, _segment))["items"][1]["subContent"];
 
-            AssertJobDescriptions(ActualWhatWilYouDo, JobItems.WhatWilYouDo);
+            AssertJobDescriptions(ActualWhatWilYouDo, _jobItems.WhatWilYouDo);
         }
 
         [Test]
         public async Task TestKdeBudePracovat()
         {
-            Assert.IsTrue(true);
-        }
+            PlaceOfEmployment? address = await alzaClient.GetJsonAsync<PlaceOfEmployment>(_segment);
+            Assert.That(address?.placeOfEmployment?.name?.ToLower(), Is.EqualTo(_placeOfEmployment.Name.ToLower()));
 
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        private async Task<JsonObject> GetJobItems()
-        {
-            var resp = await alzaClient.GetJsonAsync<JobItems.PositionItemsHref>(_segment);
-            var positionItemsHref = resp.positionItems?["meta"]?["href"].ToString();
-            JsonObject? items = await alzaClient.GetJsonAsync<JsonObject>(GetSegment(positionItemsHref));
-            return items!;
-        }
-
-        /// <summary>
-        /// Get segment from Href from initial record
-        /// </summary>
-        /// <param name="Href"></param>
-        /// <returns></returns>
-        private string GetSegment(string Href)
-        {
-            Uri positionItem = new Uri(Href);
-            string segments = string.Join("", positionItem.Segments.Skip(3));
-            Logger.Log($"Using segments: {segments}");
-            return segments;
-        }
-        /// <summary>
-        /// Assert that descriptions match
-        /// </summary>
-        /// <param name="Actual"></param>
-        /// <param name="Expected"></param>
-        private void AssertJobDescriptions(JsonArray Actual, string[] Expected)
-        {
-            Assert.That(Actual.Count, Is.EqualTo(Expected.Length), "Actual count of job expectations should be equal to expected lenght.");
-            int i = 0;
-            foreach (var item in Actual)
-            {
-                Logger.Log(item.ToString());
-                Assert.That(item.ToString(), Is.EqualTo(Expected[i]));
-                i++;
-            }
+            AssertGeoPositions(address.placeOfEmployment.longitude, _placeOfEmployment.longitude);
+            AssertGeoPositions(address.placeOfEmployment.latitude, _placeOfEmployment.latitude);
         }
 
     }
@@ -148,8 +121,8 @@ namespace AlzaTest.Tests
         {
             get
             {
-                yield return new TestFixtureData("v2/positions/softwarovy-tester", new { country = "cz" });
-                yield return new TestFixtureData("v2/positions/tester-mobilnich-aplikaci", new { country = "cz" });
+                yield return new TestFixtureData("v2/positions/softwarovy-tester", new { country = "cz" }, new JobItemsSoftwarovyTester(), new PlaceOfEmploymentCZPraha());
+                yield return new TestFixtureData("v2/positions/tester-mobilnich-aplikaci", new { country = "cz" }, new JobItemstesterMobilnichAplikaci(), new PlaceOfEmploymentCZPraha());
                 //yield return new TestFixtureData("positions/softwarovy-tester", (object) new { country = "en" });
             }
         }
