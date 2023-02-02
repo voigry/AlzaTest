@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace AlzaTest.Client
 {
-    internal class AlzaClient: IDisposable
+    internal class AlzaClient: IDisposable, IAlzaClient
     {
         readonly RestClient _client;
         public AlzaClient()
         {
-            var options = new RestClientOptions("https://webapi.alza.cz/api/career/v2");
+            var options = new RestClientOptions("https://webapi.alza.cz/api/career/");
             _client = new RestClient(options);
         }
 
