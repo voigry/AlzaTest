@@ -2,7 +2,8 @@
     <RunSettings>
         <TestRunParameters>
             <Parameter name="someParameterName" value="someExampleValue" />
-    </TestRunParameters>
+			<Parameter name="baseUrl" value="https://webapi.alza.cz/api/career/" />
+        </TestRunParameters>
     <RunConfiguration>
         <MaxCpuCount>1</MaxCpuCount>
         <ResultsDirectory>.\TestResults</ResultsDirectory>
