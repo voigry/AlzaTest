@@ -24,5 +24,8 @@ jobs:
       - name: Build
         run: dotnet build ./AlzaTest.sln --configuration Release --no-restore
         
+      - name: Test
+        run: dotnet test -v n
+        
       - name: Publish
         run: dotnet publish ./AlzaTest.sln --configuration Release --no-build
