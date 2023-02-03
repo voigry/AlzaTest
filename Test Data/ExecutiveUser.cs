@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace AlzaTest.Test_Data
 {
+    /// <summary>
+    /// Define Head of QA
+    /// </summary>
     internal class ExecutiveUser : IUser
     {
         public ExecutiveUser() { }

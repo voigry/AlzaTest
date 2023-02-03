@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace AlzaTest.Test_Data
 {
+    /// <summary>
+    /// Define IT Recruiter
+    /// </summary>
     internal class GestorUser : IUser
     {
         public GestorUser() { }

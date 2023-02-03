@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace AlzaTest.Test_Data
 {
+    /// <summary>
+    /// Interface for place of employment
+    /// </summary>
     internal interface IPlaceOfEmploymentAddress
     {
         public string Name { get; }

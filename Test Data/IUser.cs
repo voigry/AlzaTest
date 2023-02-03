@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace AlzaTest.Test_Data
 {
+    /// <summary>
+    /// Interface for Alza QA team member
+    /// </summary>
     internal interface IUser
     {
         public string? Name { get; }

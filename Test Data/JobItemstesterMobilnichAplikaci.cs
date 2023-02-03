@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace AlzaTest.Test_Data
 {
-    internal class JobItemstesterMobilnichAplikaci : IJobItems
+    /// <summary>
+    /// Define test data for position TesterMobilnichAplikaci. Data here are incomplete as given endopoint tester-mobilnich-aplikaci does not return position
+    /// </summary>
+    internal class JobItemsTesterMobilnichAplikaci : IJobItems
     {
-        /// <summary>
-        /// Data here are incomplete as given endopoint tester-mobilnich-aplikaci does not return position
-        /// </summary>
-        public JobItemstesterMobilnichAplikaci()
+        public JobItemsTesterMobilnichAplikaci()
         {
 
         }

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace AlzaTest.Test_Data
 {
+    /// <summary>
+    /// Interface for Job items describing given job position
+    /// </summary>
     public interface IJobItems
     {
         string JobDescription { get; }
