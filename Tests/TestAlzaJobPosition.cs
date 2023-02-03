@@ -16,71 +16,58 @@ using System.Threading.Tasks;
 using AlzaTest.Deserializers;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using System.Data;
 
 namespace AlzaTest.Tests
 {
     [TestFixtureSource(typeof(AlzaData), nameof(AlzaData.FixtureParams))]
     internal class TestAlzaJobPosition : AlzaBaseTest
     {
-        private RestClient alzaClient;
         private readonly string _segment;
         private readonly object _country;
         private readonly IJobItems _jobItems;
         private readonly IPlaceOfEmploymentAddress _placeOfEmployment;
-        record InitialRecord(string name, bool forStudents, JsonObject placeOfEmployment, JsonObject gestorUser, JsonObject executiveUser, JsonObject people, JsonObject positionItems);
+        private readonly IUser _gestorUser;
+        private readonly IUser _executiveUser;
 
 
-        public TestAlzaJobPosition(string segment, object country, IJobItems jobItems, IPlaceOfEmploymentAddress placeOfEmployment)
+        public TestAlzaJobPosition(string segment, object country, IJobItems jobItems, IPlaceOfEmploymentAddress placeOfEmployment, IUser gestorUser, IUser executiveUser) : base(segment, new AlzaClient().ClientInstance)
         {
             _segment = segment;
             _country = country;
             _jobItems = jobItems;
             _placeOfEmployment = placeOfEmployment;
+            _gestorUser = gestorUser;
+            _executiveUser = executiveUser;
         }
 
         [SetUp]
         public async Task SetUp()
         {
-            alzaClient = new AlzaClient().ClientInstance;
-            Console.WriteLine(_segment);
-
-            Assert.IsNotNull(_country);
-
-            object args = _country;
-
+            Logger.Log($"Running test: {TestContext.CurrentContext.Test.MethodName}");
+            Logger.Log($"Using segment: {_segment}");
+            Logger.Log($"Using country: {_country}");
+            Logger.Log($"With: {_jobItems}");
+            Logger.Log($"With: {_placeOfEmployment}");
             var request = new RestRequest(_segment);
-            request.AddObject(args);
-            var response = await alzaClient.GetAsync(request);
+            request.AddObject(_country);
+            var response = await Client.GetAsync(request);
 
             Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.OK), $"Segement: {_segment}");
-
-
-
-            //InitialRecord initialRecord = await alzaClient.GetJsonAsync<InitialRecord>(_segment, args);
-
-            /*
-            var name = initialRecord?.name;
-            var forStudents = initialRecord?.forStudents;
-            _placeOfEmployment = initialRecord.placeOfEmployment;
-            var gestorUserUrl = initialRecord?.gestorUser?["meta"]?["href"];
-            var executiveUserUrl = initialRecord?.executiveUser?["meta"]?["href"];
-            var people = initialRecord?.people?["meta"]?["href"];
-            _positionItemsHref = initialRecord?.positionItems?["meta"]?["href"].ToString();
-            */
-
-            //Assert.That(name, Is.EqualTo("Softwarový Tester"));
 
         }
         [Test]
         public async Task JobShouldNotBeSuitableForStudents()
         {
-            Assert.True(true);
+            var isSuitable = await Client.GetJsonAsync<ForStudents>( _segment);
+
+            Assert.That(isSuitable?.forStudents, Is.False);
         }
 
         [Test]
         public async Task TestPopisPozice()
         {
-            var ActualJobDescription = DecodeHtmlNodeToInnerText((string)(await GetJobItems(alzaClient, _segment))["items"][0]["content"], "//div[2]");
+            var ActualJobDescription = DecodeHtmlNodeToInnerText((string)(await GetJobItems())["items"][0]["content"], "//div[2]");
 
             Assert.That(ActualJobDescription.ToLower(), Is.EqualTo(_jobItems.JobDescription.ToLower()));
 
@@ -90,7 +77,7 @@ namespace AlzaTest.Tests
         [Test]
         public async Task TestCoSeOdTebeOcekava()
         {
-            JsonArray ActualWhaIsExpectedFromYou = (JsonArray)(await GetJobItems(alzaClient, _segment))["items"][2]["subContent"];
+            JsonArray ActualWhaIsExpectedFromYou = await GetJobItemSubContent(2);
 
             AssertJobDescriptions(ActualWhaIsExpectedFromYou, _jobItems.WhatIsExpectedFromYou);
 
@@ -98,7 +85,7 @@ namespace AlzaTest.Tests
         [Test]
         public async Task TestCoBudesMitVsechnoPodPalcemADoCehojdes()
         {
-            JsonArray ActualWhatWilYouDo = (JsonArray)(await GetJobItems(alzaClient, _segment))["items"][1]["subContent"];
+            JsonArray ActualWhatWilYouDo = await GetJobItemSubContent(1);
 
             AssertJobDescriptions(ActualWhatWilYouDo, _jobItems.WhatWilYouDo);
         }
@@ -106,11 +93,33 @@ namespace AlzaTest.Tests
         [Test]
         public async Task TestKdeBudePracovat()
         {
-            PlaceOfEmployment? address = await alzaClient.GetJsonAsync<PlaceOfEmployment>(_segment);
+            PlaceOfEmployment? address = await Client.GetJsonAsync<PlaceOfEmployment>(_segment);
             Assert.That(address?.placeOfEmployment?.name?.ToLower(), Is.EqualTo(_placeOfEmployment.Name.ToLower()));
 
             AssertGeoPositions(address.placeOfEmployment.longitude, _placeOfEmployment.longitude);
             AssertGeoPositions(address.placeOfEmployment.latitude, _placeOfEmployment.latitude);
+        }
+
+        [Test]
+        public async Task SkymSeNaPohovoruSetkas()
+        {
+            User actualGestorUser = await GetGestorUser();
+            Logger.Log($"Assert that you will meet IT Recruiter {_gestorUser.Name}");
+            Assert.That(actualGestorUser.name, Is.EqualTo(_gestorUser.Name));
+
+            User actualExecutiveUser = await GetExecutiveUser();
+            Logger.Log($"Assert that you will meet Head of QA {_executiveUser.Name}");
+            Assert.That(actualExecutiveUser.name, Is.EqualTo(_executiveUser.Name));
+
+            Employees people = await GetPeople();
+
+            Logger.Log("You will also meet: ");
+            foreach (User employee in people.items)
+            {
+                Logger.Log($"{employee.name}");
+            }
+
+            Assert.That(people.items.Count, Is.InRange(1, 20));
         }
 
     }
@@ -121,8 +130,8 @@ namespace AlzaTest.Tests
         {
             get
             {
-                yield return new TestFixtureData("v2/positions/softwarovy-tester", new { country = "cz" }, new JobItemsSoftwarovyTester(), new PlaceOfEmploymentCZPraha());
-                yield return new TestFixtureData("v2/positions/tester-mobilnich-aplikaci", new { country = "cz" }, new JobItemstesterMobilnichAplikaci(), new PlaceOfEmploymentCZPraha());
+                yield return new TestFixtureData("v2/positions/softwarovy-tester", new { country = "cz" }, new JobItemsSoftwarovyTester(), new PlaceOfEmploymentCZPraha(), new GestorUser(), new ExecutiveUser());
+                yield return new TestFixtureData("v2/positions/tester-mobilnich-aplikaci", new { country = "cz" }, new JobItemstesterMobilnichAplikaci(), new PlaceOfEmploymentCZPraha(), new GestorUser(), new ExecutiveUser());
                 //yield return new TestFixtureData("positions/softwarovy-tester", (object) new { country = "en" });
             }
         }

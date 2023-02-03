@@ -15,8 +15,41 @@ using System.Threading.Tasks;
 
 namespace AlzaTest.Tests
 {
-    public class AlzaBaseTest
+    internal class AlzaBaseTest
     {
+        public string _segment;
+        readonly RestClient _client;
+
+        public AlzaBaseTest(string pokus, RestClient alzaClient)
+        {
+            _segment = pokus;
+            _client = alzaClient;
+        }
+
+        public string Segment
+        {
+            get { return _segment; }
+        }
+
+        public RestClient Client
+        {
+            get { return _client; }
+        }
+        [SetUp]
+        public void SetUpBase()
+        {
+            Logger.Log($"Start test with baseUrl: {Client.Options.BaseUrl}");
+        }
+
+        /// <summary>
+        /// Get subContent list of the job item
+        /// </summary>
+        /// <param name="index">Job items list index</param>
+        /// <returns></returns>
+        public async Task<JsonArray> GetJobItemSubContent(int index)
+        {
+            return (JsonArray)(await GetJobItems())["items"][index]["subContent"];
+        }
         /// <summary>
         /// Decode string with html and return normalized inner text
         /// </summary>
@@ -51,15 +84,52 @@ namespace AlzaTest.Tests
         /// <returns>
         /// Items like What you will do, or job description
         /// </returns>
-        public async Task<JsonObject> GetJobItems(RestClient alzaClient, string segment)
+        public async Task<JsonObject> GetJobItems()
         {
-            var resp = await alzaClient.GetJsonAsync<PositionItemsHref>(segment);
+            var resp = await Client.GetJsonAsync<PositionItemsHref>(Segment);
             var positionItemsHref = resp.positionItems?["meta"]?["href"].ToString();
-            JsonObject? items = await alzaClient.GetJsonAsync<JsonObject>(GetSegment(positionItemsHref));
+            JsonObject? items = await Client.GetJsonAsync<JsonObject>(GetSegment(positionItemsHref));
             return items;
         }
+        /// <summary>
+        /// Get IT Recruiter
+        /// </summary>
+        /// <returns></returns>
+        public async Task<User> GetGestorUser()
+        {
+            var resp = await Client.GetJsonAsync<GestorUserHref>(Segment);
+            string? gestorUserHref = resp.gestorUser?["meta"]?["href"].ToString();
+            User? user = await Client.GetJsonAsync<User>(gestorUserHref);
+            return user;
+        }
+        /// <summary>
+        /// Get Head of QA
+        /// </summary>
+        /// <returns></returns>
+        public async Task<User> GetExecutiveUser()
+        {
+            var resp = await Client.GetJsonAsync<ExecutiveUserHref>(Segment);
+            string? executiveUserHref = resp.executiveUser?["meta"]?["href"].ToString();
+            User? user = await Client.GetJsonAsync<User>(executiveUserHref);
+            return user;
+        }
+        /// <summary>
+        /// Get people
+        /// </summary>
+        /// <returns></returns>
+        public async Task<Employees> GetPeople()
+        {
+            var resp = await Client.GetJsonAsync<PeopleHref>(Segment);
+            string? peopleHref = resp.people?["meta"]?["href"].ToString();
+            var jobPositionId = new Uri(peopleHref).Query.Split("=")[1];
+            var args = new
+            {
+                jobPositionId = jobPositionId
+            };
+            var employeesHref = (string)(await Client.GetJsonAsync<JsonObject>(GetSegment(peopleHref), args))["meta"]["href"];
 
-
+            return await Client.GetJsonAsync<Employees>(employeesHref);
+        }
         /// <summary>
         /// Get segment from Href from initial record
         /// </summary>
