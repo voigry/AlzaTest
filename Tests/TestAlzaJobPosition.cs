@@ -31,7 +31,7 @@ namespace AlzaTest.Tests
         private readonly IUser _executiveUser;
 
 
-        public TestAlzaJobPosition(string segment, object country, IJobItems jobItems, IPlaceOfEmploymentAddress placeOfEmployment, IUser gestorUser, IUser executiveUser) : base(segment, new AlzaClient().ClientInstance)
+        public TestAlzaJobPosition(string segment, object country, IJobItems jobItems, IPlaceOfEmploymentAddress placeOfEmployment, IUser gestorUser, IUser executiveUser) : base(segment, new AlzaClient().Client)
         {
             _segment = segment;
             _country = country;
@@ -131,7 +131,7 @@ namespace AlzaTest.Tests
             get
             {
                 yield return new TestFixtureData("v2/positions/softwarovy-tester", new { country = "cz" }, new JobItemsSoftwarovyTester(), new PlaceOfEmploymentCZPraha(), new GestorUser(), new ExecutiveUser());
-                yield return new TestFixtureData("v2/positions/tester-mobilnich-aplikaci", new { country = "cz" }, new JobItemstesterMobilnichAplikaci(), new PlaceOfEmploymentCZPraha(), new GestorUser(), new ExecutiveUser());
+                yield return new TestFixtureData("v2/positions/tester-mobilnich-aplikaci", new { country = "cz" }, new JobItemsTesterMobilnichAplikaci(), new PlaceOfEmploymentCZPraha(), new GestorUser(), new ExecutiveUser());
                 //yield return new TestFixtureData("positions/softwarovy-tester", (object) new { country = "en" });
             }
         }
