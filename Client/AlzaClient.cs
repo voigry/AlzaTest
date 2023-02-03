@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace AlzaTest.Client
 {
+    /// <summary>
+    /// Alza RestSharp rest client
+    /// </summary>
     internal class AlzaClient : IDisposable, IAlzaClient
     {
         readonly RestClient _client;
@@ -16,7 +19,11 @@ namespace AlzaTest.Client
             _client = new RestClient(options);
         }
 
-        public RestClient ClientInstance => _client;
+        public RestClient Client
+        {
+            get { return _client; }
+        }
+
 
         public void Dispose()
         {
