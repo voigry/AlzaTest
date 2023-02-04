@@ -52,7 +52,7 @@ namespace AlzaTest.Tests
         }
 
         [Test]
-        public async Task TestPopisPozice()
+        public async Task JobItems_PopisPozice_ShouldMatch()
         {
             var ActualJobDescription = DecodeHtmlNodeToInnerText(await GetJobItemContent(0), "//div[2]");
 
@@ -62,7 +62,7 @@ namespace AlzaTest.Tests
 
         }
         [Test]
-        public async Task TestCoSeOdTebeOcekava()
+        public async Task JobItems_CoSeOdTebeOcekava_ShouldMatch()
         {
             JsonArray ActualWhaIsExpectedFromYou = await GetJobItemSubContent(2);
 
@@ -70,7 +70,7 @@ namespace AlzaTest.Tests
 
         }
         [Test]
-        public async Task TestCoBudesMitVsechnoPodPalcemADoCehojdes()
+        public async Task JobItems_CoBudesMitVsechnoPodPalcemADoCehojdes_ShouldMatch()
         {
             JsonArray ActualWhatWilYouDo = await GetJobItemSubContent(1);
 
@@ -78,7 +78,7 @@ namespace AlzaTest.Tests
         }
 
         [Test]
-        public async Task TestKdeBudePracovat()
+        public async Task JobItems_TestKdeBudePracovat_ShouldMatch()
         {
             PlaceOfEmployment? address = await Client.GetJsonAsync<PlaceOfEmployment>(_segment);
             Assert.That(address?.placeOfEmployment?.name?.ToLower(), Is.EqualTo(_placeOfEmployment.Name.ToLower()));
@@ -88,9 +88,8 @@ namespace AlzaTest.Tests
         }
 
         [Test]
-        public async Task SkymSeNaPohovoruSetkas()
+        public async Task JobItems_SkymSeNaPohovoruSetkas_ShouldMatch()
         {
-            Console.WriteLine(TestContext.CurrentContext.TestDirectory);
             User actualGestorUser = await GetGestorUser();
             Logger.Log($"Assert that you will meet IT Recruiter {_gestorUser.Name}");
             Assert.That(actualGestorUser.name, Is.EqualTo(_gestorUser.Name));
@@ -100,13 +99,6 @@ namespace AlzaTest.Tests
             Assert.That(actualExecutiveUser.name, Is.EqualTo(_executiveUser.Name));
 
             Employees people = await GetPeople();
-
-            Logger.Log("You will also meet: ");
-            foreach (User employee in people.items)
-            {
-                Logger.Log($"{employee.name} - {employee.description}");
-            }
-
             Assert.That(people.items.Count, Is.InRange(1, 20));
         }
 
@@ -120,7 +112,6 @@ namespace AlzaTest.Tests
             {
                 yield return new TestFixtureData("v2/positions/softwarovy-tester", new { country = "cz" }, new JobItemsSoftwarovyTester(), new PlaceOfEmploymentCZPraha(), new GestorUser(), new ExecutiveUser());
                 yield return new TestFixtureData("v2/positions/tester-mobilnich-aplikaci", new { country = "cz" }, new JobItemsTesterMobilnichAplikaci(), new PlaceOfEmploymentCZPraha(), new GestorUser(), new ExecutiveUser());
-                //yield return new TestFixtureData("positions/softwarovy-tester", (object) new { country = "en" });
             }
         }
     }
