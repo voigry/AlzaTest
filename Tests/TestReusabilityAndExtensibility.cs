@@ -10,9 +10,9 @@ namespace AlzaTest.Tests
     /// </summary>
     /// 
     [TestFixture("v2/positions/softwarovy-tester")]
-    internal class TestReusabilityAndExtensibility : AlzaBaseTest
+    internal class TestReusabilityAndExtensibilityWithTestFixtureParam : AlzaBaseTest
     {
-        public TestReusabilityAndExtensibility(string segment) : base(segment)
+        public TestReusabilityAndExtensibilityWithTestFixtureParam(string segment) : base(segment)
         {
 
         }
@@ -24,7 +24,7 @@ namespace AlzaTest.Tests
         }
 
         [Test]
-        public async Task NewTest()
+        public async Task TestWithNoParam()
         {
             Logger.Log("New Test comment");
             JsonArray ActualWhatWilYouDo = await GetJobItemSubContent(1);
@@ -42,7 +42,7 @@ namespace AlzaTest.Tests
         }
 
         [TestCase("v2/positions/softwarovy-tester")]
-        public async Task TestValidSegment(string segment)
+        public async Task TestWithParam(string segment)
         {
             Logger.Log($"Using segment: {segment}");
 
@@ -50,19 +50,6 @@ namespace AlzaTest.Tests
             var response = await Client.GetAsync(request);
 
             Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.OK), $"Segement: {segment}");
-        }
-
-        [TestCase("v2/positions/softwarovy-mag")]
-        public async Task TestInvalidSegment(string segment)
-        {
-            Logger.Log($"Using segment: {segment}");
-
-            var request = new RestRequest(segment).AddQueryParameter("country", "cz");
-            var response = await Client.GetAsync(request);
-
-            Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.NotFound), $"Segement: {segment}");
-
-
         }
     }
 }

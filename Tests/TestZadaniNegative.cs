@@ -4,9 +4,6 @@ using RestSharp;
 namespace AlzaTest.Tests
 {
 
-
-
-
     [TestFixture]
     internal class TestZadaniNegative : AlzaBaseTest
     {
