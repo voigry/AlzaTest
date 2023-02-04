@@ -21,15 +21,30 @@ public class SetupTrace
         ProjectDirectory();
     }
     /// <summary>
-    /// Get project directory absolute path 
+    /// Get project directory absolute path independently on machine or OS
     /// e.g.: "C:\\Users\\vojte\\source\\repos\\AlzaTest\\"
     /// </summary>
     /// <param name="path"></param>
     private string ProjectDirectory()
     {
-        List<string> pathSegments = TestContext.CurrentContext.TestDirectory.Split('\\').ToList<string>();
-        var projectDirPathIndex = pathSegments.FindLastIndex(x => x == "AlzaTest");
-        string projectDirectory = string.Join("\\", pathSegments.Take<string>(projectDirPathIndex + 1));
+        //Find current test directory
+        string testDirectory = TestContext.CurrentContext.TestDirectory;
+        //From test directory string create uri and split it to segments
+        var tdUri = new Uri(testDirectory);
+        var tdUriType = tdUri.GetType;
+        List<string> tdSegments = tdUri.Segments.ToList<string>();
+        //Find out the project name last index 
+        var tdIndex = tdSegments.FindLastIndex(s => s == "AlzaTest/");
+        //Use path combine to create absolute path for log4env
+        var slkj = tdSegments.Take<string>(tdIndex + 1).ToArray<string>();
+        var path = Path.Combine(tdSegments.Take<string>(tdIndex + 1).ToArray<string>());
+        var sep = Path.DirectorySeparatorChar;
+
+        
+
+        List<string> pathSegmentsList = TestContext.CurrentContext.TestDirectory.Split(Path.DirectorySeparatorChar).ToList<string>();
+        var projectDirPathIndex = pathSegmentsList.FindLastIndex(x => x == "AlzaTest");
+        string projectDirectory = string.Join(Path.DirectorySeparatorChar, pathSegmentsList.Take<string>(projectDirPathIndex + 1));
         Console.WriteLine(projectDirectory);
         return projectDirectory;
     }
