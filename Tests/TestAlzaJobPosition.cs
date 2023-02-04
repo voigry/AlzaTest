@@ -104,6 +104,7 @@ namespace AlzaTest.Tests
         [Test]
         public async Task SkymSeNaPohovoruSetkas()
         {
+            Console.WriteLine(TestContext.CurrentContext.TestDirectory);
             User actualGestorUser = await GetGestorUser();
             Logger.Log($"Assert that you will meet IT Recruiter {_gestorUser.Name}");
             Assert.That(actualGestorUser.name, Is.EqualTo(_gestorUser.Name));
