@@ -29,7 +29,9 @@ public class SetupTrace
     {
         List<string> pathSegments = TestContext.CurrentContext.TestDirectory.Split('\\').ToList<string>();
         var projectDirPathIndex = pathSegments.FindIndex(x => x == "TestProjectNunit");
-        return string.Join("\\", pathSegments.Take<string>(projectDirPathIndex + 1));
+        string projectDirectory = string.Join("\\", pathSegments.Take<string>(projectDirPathIndex + 1));
+        Console.WriteLine(projectDirectory);
+        return projectDirectory;
     }
 
     [OneTimeTearDown]
