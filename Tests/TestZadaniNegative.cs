@@ -1,22 +1,13 @@
-﻿using AlzaTest.Deserializers;
-using AlzaTest.Loging;
-using AlzaTest.Test_Data;
+﻿using AlzaTest.Logging;
 using RestSharp;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Nodes;
-using System.Threading.Tasks;
 
 namespace AlzaTest.Tests
 {
-    
 
 
 
-        [TestFixture]
+
+    [TestFixture]
     internal class TestZadaniNegative : AlzaBaseTest
     {
         public TestZadaniNegative() : base()

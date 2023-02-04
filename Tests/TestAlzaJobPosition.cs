@@ -1,6 +1,5 @@
-﻿using AlzaTest.Client;
-using AlzaTest.Deserializers;
-using AlzaTest.Loging;
+﻿using AlzaTest.Deserializers;
+using AlzaTest.Logging;
 using AlzaTest.Test_Data;
 using RestSharp;
 using System.Collections;
@@ -31,7 +30,7 @@ namespace AlzaTest.Tests
         [SetUp]
         public async Task SetUp()
         {
-            
+
             Logger.Log($"Using segment: {_segment}");
             Logger.Log($"Using country: {_country}");
             Logger.Log($"With: {_jobItems}");

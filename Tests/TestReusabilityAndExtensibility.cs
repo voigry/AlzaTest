@@ -1,13 +1,7 @@
-﻿using AlzaTest.Client;
-using AlzaTest.Loging;
+﻿using AlzaTest.Logging;
 using AlzaTest.Test_Data;
 using RestSharp;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json.Nodes;
-using System.Threading.Tasks;
 
 namespace AlzaTest.Tests
 {
@@ -36,7 +30,7 @@ namespace AlzaTest.Tests
             JsonArray ActualWhatWilYouDo = await GetJobItemSubContent(1);
 
             AssertJobDescriptions(ActualWhatWilYouDo, new JobItemsSoftwarovyTester().WhatWilYouDo);
-        }     
+        }
     }
 
     [TestFixture]
@@ -51,7 +45,7 @@ namespace AlzaTest.Tests
         public async Task TestValidSegment(string segment)
         {
             Logger.Log($"Using segment: {segment}");
-            
+
             var request = new RestRequest(segment).AddQueryParameter("country", "cz");
             var response = await Client.GetAsync(request);
 

@@ -1,6 +1,6 @@
 ﻿using AlzaTest.Client;
 using AlzaTest.Deserializers;
-using AlzaTest.Loging;
+using AlzaTest.Logging;
 using HtmlAgilityPack;
 using RestSharp;
 using System.Net;
@@ -21,7 +21,7 @@ namespace AlzaTest.Tests
         public AlzaBaseTest() { }
         public AlzaBaseTest(string segment)
         {
-            _segment= segment;
+            _segment = segment;
         }
 
         public string Segment

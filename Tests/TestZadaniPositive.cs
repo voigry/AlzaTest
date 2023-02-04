@@ -1,12 +1,7 @@
 ﻿using AlzaTest.Deserializers;
-using AlzaTest.Loging;
+using AlzaTest.Logging;
 using AlzaTest.Test_Data;
 using RestSharp;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AlzaTest.Tests
 {
