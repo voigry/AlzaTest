@@ -1,4 +1,5 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -11,6 +12,7 @@ namespace AlzaTest.Loging
     [TestFixture]
     internal class Logger
     {
+        protected static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         public Logger()
         {
 
@@ -23,12 +25,16 @@ namespace AlzaTest.Loging
 
         public static void Log(string message)
         {
-            TestContext.Out.WriteLine($"[{GetTimeNow()}] {message}");
+            //TestContext msg. - not in use
+            //TestContext.Out.WriteLine($"[{GetTimeNow()}] {message}");
+            log.Info(message);
         }
 
         public static void Error(string message)
         {
-            TestContext.Error.WriteLine($"[{GetTimeNow()}] {message}");
+            // TestContext msg. - not in use
+            //TestContext.Error.WriteLine($"[{GetTimeNow()}] {message}");
+            log.Error(message);
         }
 
     }

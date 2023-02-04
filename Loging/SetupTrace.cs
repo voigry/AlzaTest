@@ -1,4 +1,9 @@
-﻿using System.Diagnostics;
+﻿using log4net;
+using log4net.Config;
+using System.Configuration;
+using System.Diagnostics;
+using System.IO;
+using System.Reflection;
 
 [SetUpFixture]
 public class SetupTrace
@@ -7,6 +12,24 @@ public class SetupTrace
     public void StartTest()
     {
         Trace.Listeners.Add(new ConsoleTraceListener());
+        var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
+
+        log4net.GlobalContext.Properties["LogFileName"] = $"{ProjectDirectory()}\\TestResults\\";
+        string pokus = $"{ProjectDirectory()}\\log4net.config";
+        var log4netFilleInfo = new FileInfo(pokus);
+        log4net.Config.XmlConfigurator.Configure(log4netFilleInfo);
+        ProjectDirectory();
+    }
+    /// <summary>
+    /// Get project directory absolute path 
+    /// e.g.: "C:\\Users\\vojte\\source\\repos\\TestProjectNunit\\"
+    /// </summary>
+    /// <param name="path"></param>
+    private string ProjectDirectory()
+    {
+        List<string> pathSegments = TestContext.CurrentContext.TestDirectory.Split('\\').ToList<string>();
+        var projectDirPathIndex = pathSegments.FindIndex(x => x == "TestProjectNunit");
+        return string.Join("\\", pathSegments.Take<string>(projectDirPathIndex + 1));
     }
 
     [OneTimeTearDown]

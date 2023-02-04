@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
     <RunSettings>
         <TestRunParameters>
-            <Parameter name="someParameterName" value="someExampleValue" />
+            <Parameter name="log4net-config-file" value="log4net.config" />
 			<Parameter name="baseUrl" value="https://webapi.alza.cz/api/career/" />
         </TestRunParameters>
     <RunConfiguration>
