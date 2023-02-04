@@ -12,11 +12,12 @@
     </RunConfiguration>
     <LoggerRunSettings>
     <Loggers>
-      <Logger friendlyName="console" enabled="True">
+	  <!--NOT IN USE -->
+      <!--<Logger friendlyName="console" enabled="True">
         <Configuration>
             <Verbosity>quiet</Verbosity>
         </Configuration>
-      </Logger>
+      </Logger>-->
       <Logger friendlyName="trx" enabled="True">
         <Configuration>
           <LogFileName>foo.trx</LogFileName>

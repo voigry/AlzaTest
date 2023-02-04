@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Nodes;
-using System.Threading.Tasks;
-
-namespace AlzaTest.Test_Data
+﻿namespace AlzaTest.Test_Data
 {
     /// <summary>
     /// Define job items for position Softwarovy Tester

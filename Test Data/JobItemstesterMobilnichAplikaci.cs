@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Nodes;
-using System.Threading.Tasks;
-
-namespace AlzaTest.Test_Data
+﻿namespace AlzaTest.Test_Data
 {
     /// <summary>
     /// Define test data for position TesterMobilnichAplikaci. Data here are incomplete as given endopoint tester-mobilnich-aplikaci does not return position

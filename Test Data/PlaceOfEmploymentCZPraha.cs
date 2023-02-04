@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AlzaTest.Test_Data
+﻿namespace AlzaTest.Test_Data
 {
     /// <summary>
     /// Define place of employment for CZ Praha Holesovice. 
@@ -12,7 +6,7 @@ namespace AlzaTest.Test_Data
     /// </summary>
     internal class PlaceOfEmploymentCZPraha : IPlaceOfEmploymentAddress
     {
-        
+
         public PlaceOfEmploymentCZPraha()
         {
 

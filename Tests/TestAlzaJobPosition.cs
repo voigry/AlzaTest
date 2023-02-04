@@ -1,24 +1,10 @@
 ﻿using AlzaTest.Client;
+using AlzaTest.Deserializers;
 using AlzaTest.Loging;
 using AlzaTest.Test_Data;
-using HtmlAgilityPack;
-using NUnit.Framework;
 using RestSharp;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Text.Encodings.Web;
 using System.Text.Json.Nodes;
-using System.Threading.Tasks;
-using AlzaTest.Deserializers;
-using System.Globalization;
-using System.Text.RegularExpressions;
-using System.Data;
-using log4net;
-using log4net.Config;
 
 namespace AlzaTest.Tests
 {
@@ -32,7 +18,7 @@ namespace AlzaTest.Tests
         private readonly IUser _executiveUser;
 
 
-        public TestAlzaJobPosition(string segment, object country, IJobItems jobItems, IPlaceOfEmploymentAddress placeOfEmployment, IUser gestorUser, IUser executiveUser) : base(segment, new AlzaClient().Client)
+        public TestAlzaJobPosition(string segment, object country, IJobItems jobItems, IPlaceOfEmploymentAddress placeOfEmployment, IUser gestorUser, IUser executiveUser) : base(segment)
         {
             _segment = segment;
             _country = country;
@@ -45,7 +31,7 @@ namespace AlzaTest.Tests
         [SetUp]
         public async Task SetUp()
         {
-            Logger.Log($"Running test: {TestContext.CurrentContext.Test.MethodName}");
+            
             Logger.Log($"Using segment: {_segment}");
             Logger.Log($"Using country: {_country}");
             Logger.Log($"With: {_jobItems}");
@@ -60,7 +46,7 @@ namespace AlzaTest.Tests
         [Test]
         public async Task JobShouldNotBeSuitableForStudents()
         {
-            var isSuitable = await Client.GetJsonAsync<ForStudents>( _segment);
+            var isSuitable = await Client.GetJsonAsync<ForStudents>(_segment);
 
             Assert.That(isSuitable?.forStudents, Is.False);
         }
@@ -68,7 +54,7 @@ namespace AlzaTest.Tests
         [Test]
         public async Task TestPopisPozice()
         {
-            var ActualJobDescription = DecodeHtmlNodeToInnerText((string)(await GetJobItems())["items"][0]["content"], "//div[2]");
+            var ActualJobDescription = DecodeHtmlNodeToInnerText(await GetJobItemContent(0), "//div[2]");
 
             Assert.That(ActualJobDescription.ToLower(), Is.EqualTo(_jobItems.JobDescription.ToLower()));
 

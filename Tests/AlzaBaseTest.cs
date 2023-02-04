@@ -1,46 +1,46 @@
 ﻿using AlzaTest.Client;
-using AlzaTest.Loging;
-using AlzaTest.Test_Data;
 using AlzaTest.Deserializers;
+using AlzaTest.Loging;
 using HtmlAgilityPack;
 using RestSharp;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
 using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace AlzaTest.Tests
 {
+    /// <summary>
+    /// Test Base for Alza tests.
+    /// 
+    /// </summary>
     internal class AlzaBaseTest
     {
-        public string _segment;
-        readonly RestClient _client;
+        public RestClient Client { get; set; }
+        public string _segment = string.Empty;
 
-        public AlzaBaseTest(string pokus, RestClient alzaClient)
+        public AlzaBaseTest() { }
+        public AlzaBaseTest(string segment)
         {
-            _segment = pokus;
-            _client = alzaClient;
+            _segment= segment;
         }
 
         public string Segment
         {
             get { return _segment; }
+            set { _segment = value; }
         }
 
-        public RestClient Client
-        {
-            get { return _client; }
-        }
         [SetUp]
         public void SetUpBase()
         {
+            Client = new AlzaClient().Client;
             Logger.Log($"Start test with baseUrl: {Client.Options.BaseUrl}");
+            Logger.Log($"Running test: {TestContext.CurrentContext.Test.MethodName}");
         }
-
+        public async Task<string> GetJobItemContent(int index)
+        {
+            return (string)(await GetJobItems())["items"][index]["content"];
+        }
         /// <summary>
         /// Get subContent list of the job item
         /// </summary>
@@ -48,7 +48,7 @@ namespace AlzaTest.Tests
         /// <returns></returns>
         public async Task<JsonArray> GetJobItemSubContent(int index)
         {
-            return (JsonArray)(await GetJobItems())["items"][index]["subContent"];
+            return (JsonArray)(await GetJobItems())["items"]?[index]["subContent"];
         }
         /// <summary>
         /// Decode string with html and return normalized inner text
@@ -87,9 +87,9 @@ namespace AlzaTest.Tests
         public async Task<JsonObject> GetJobItems()
         {
             var resp = await Client.GetJsonAsync<PositionItemsHref>(Segment);
-            var positionItemsHref = resp.positionItems?["meta"]?["href"].ToString();
-            JsonObject? items = await Client.GetJsonAsync<JsonObject>(GetSegment(positionItemsHref));
-            return items;
+            var positionItemsHref = resp?.positionItems?["meta"]?["href"]?.ToString();
+            JsonObject items = await Client.GetJsonAsync<JsonObject>(GetSegment(positionItemsHref));
+            return items!;
         }
         /// <summary>
         /// Get IT Recruiter
