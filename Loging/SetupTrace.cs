@@ -28,7 +28,7 @@ public class SetupTrace
     private string ProjectDirectory()
     {
         List<string> pathSegments = TestContext.CurrentContext.TestDirectory.Split('\\').ToList<string>();
-        var projectDirPathIndex = pathSegments.FindIndex(x => x == "AlzaTest");
+        var projectDirPathIndex = pathSegments.FindLastIndex(x => x == "AlzaTest");
         string projectDirectory = string.Join("\\", pathSegments.Take<string>(projectDirPathIndex + 1));
         Console.WriteLine(projectDirectory);
         return projectDirectory;
