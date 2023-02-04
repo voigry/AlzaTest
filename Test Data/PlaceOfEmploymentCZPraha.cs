@@ -11,6 +11,10 @@
         {
 
         }
+        public string FullName
+        {
+            get => "Hall office park, U Pergamenky 1522/2, Praha – Holešovice, 170 00";
+        }
 
         public string Name
         {

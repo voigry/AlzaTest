@@ -1,7 +1,9 @@
-﻿using AlzaTest.Loging;
+﻿using AlzaTest.Deserializers;
+using AlzaTest.Loging;
 using AlzaTest.Test_Data;
 using RestSharp;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,35 +12,11 @@ using System.Threading.Tasks;
 
 namespace AlzaTest.Tests
 {
-    [TestFixture("v2/positions/softwarovy-tester")]
-    internal class TestZadaniPositive : AlzaBaseTest
-    {
-        private readonly IJobItems _jobItems;
-        public TestZadaniPositive(string segment) : base(segment)
-        {
-            _jobItems = new JobItemsSoftwarovyTester();
-        }
+    
 
-        [SetUp]
-        public void SetUp()
-        {
-            Logger.Log($"Using segment: {Segment}");
 
-        }
 
-        [Test]
-        public async Task TestPopisPozice()
-        {
-            var ActualJobDescription = DecodeHtmlNodeToInnerText(await GetJobItemContent(0), "//div[2]");
-
-            Assert.That(ActualJobDescription.ToLower(), Is.EqualTo(_jobItems.JobDescription.ToLower()));
-
-            Assert.That(ActualJobDescription, Is.EqualTo(_jobItems.JobDescription));
-
-        }
-    }
-
-    [TestFixture]
+        [TestFixture]
     internal class TestZadaniNegative : AlzaBaseTest
     {
         public TestZadaniNegative() : base()
@@ -70,15 +48,16 @@ namespace AlzaTest.Tests
 
         }
 
-        [TestCase("v2/positions/softwarovy-tester")]
-        public async Task TestInvalidCountry(string segment)
+        [TestCase("v2/positions/softwarovy-tester", "CzechiaCZ")]
+        public async Task TestInvalidCountry(string segment, string country)
         {
             Logger.Log($"Using segment: {segment}");
+            Logger.Log($"Using country: {country}");
 
-            var request = new RestRequest(segment).AddQueryParameter("country", "DDR");
+            var request = new RestRequest(segment).AddQueryParameter("country", country);
             var response = await Client.GetAsync(request);
 
-            Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.NotFound), $"Segement: {segment}");
+            Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.NotFound), $"Country: {country}");
 
 
         }

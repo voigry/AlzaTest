@@ -5,6 +5,7 @@
     /// </summary>
     internal interface IPlaceOfEmploymentAddress
     {
+        public string FullName { get; }
         public string Name { get; }
 
         public string StreetName { get; }
