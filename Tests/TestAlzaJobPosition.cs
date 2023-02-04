@@ -43,7 +43,7 @@ namespace AlzaTest.Tests
 
         }
         [Test]
-        public async Task JobShouldNotBeSuitableForStudents()
+        public async Task JobItems_JobShouldNotBeSuitableForStudents()
         {
             var isSuitable = await Client.GetJsonAsync<ForStudents>(_segment);
 
