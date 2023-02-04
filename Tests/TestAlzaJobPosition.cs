@@ -17,13 +17,14 @@ using AlzaTest.Deserializers;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Data;
+using log4net;
+using log4net.Config;
 
 namespace AlzaTest.Tests
 {
     [TestFixtureSource(typeof(AlzaData), nameof(AlzaData.FixtureParams))]
     internal class TestAlzaJobPosition : AlzaBaseTest
     {
-        private readonly string _segment;
         private readonly object _country;
         private readonly IJobItems _jobItems;
         private readonly IPlaceOfEmploymentAddress _placeOfEmployment;
@@ -116,7 +117,7 @@ namespace AlzaTest.Tests
             Logger.Log("You will also meet: ");
             foreach (User employee in people.items)
             {
-                Logger.Log($"{employee.name}");
+                Logger.Log($"{employee.name} - {employee.description}");
             }
 
             Assert.That(people.items.Count, Is.InRange(1, 20));
