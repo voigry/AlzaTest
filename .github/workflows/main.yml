@@ -24,8 +24,11 @@ jobs:
       - name: Build
         run: dotnet build ./AlzaTest.sln --configuration Release --no-restore
         
-      - name: Test
+      - name: List test
         run: dotnet test --list-tests
+        
+      - name: Test
+        run: dotnet test --filter SkymSeNaPohovoruSetkas
         
       - name: Publish
         run: dotnet publish ./AlzaTest.sln --configuration Release --no-build
