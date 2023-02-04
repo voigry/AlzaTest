@@ -28,7 +28,7 @@ jobs:
         run: dotnet test --list-tests
         
       - name: Test
-        run: dotnet test --filter SkymSeNaPohovoruSetkas
+        run: dotnet test --filter TestValidSegment
         
       - name: Publish
         run: dotnet publish ./AlzaTest.sln --configuration Release --no-build
