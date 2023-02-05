@@ -13,7 +13,7 @@ https://webapi.alza.cz/api/career/v2/positions/softwarovy-tester?country=cz
 * Kde bude pracovat
 * S kým se na pohovoru setká a co se o něm doví.
 * Jestli je to práce pro studenty
-* Požadavky:(Pokuste se dodržet zadání, doporučené je splnit všechny, není však povinné)
+## Požadavky:(Pokuste se dodržet zadání, doporučené je splnit všechny, není však povinné)
 * Řešení je verzováno pomocí Gitu uloženo na GitHub a spustitelné
 * Řešení používá .NET 5.0
 * Řešení používá NUnit jako test runner
