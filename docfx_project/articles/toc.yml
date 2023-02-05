@@ -1,2 +1,6 @@
-- name: Introduction
-  href: intro.md
+items:
+- name: Řešení Alza testovacího případu
+  href: solution.md
+
+- name: Zadání Alza testovacího případu
+  href: zadani.md

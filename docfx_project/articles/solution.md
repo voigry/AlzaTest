@@ -1,13 +1,16 @@
-# Řešení zadání Alza case study
-> Zadáním je navrhnout plně automatizovanou test suitu pomocí .NET Core a C#. Běhové prostředí
+# Řešení testovacího případu
+> Tento projekt je řešením pro zadání Alza case study. Cílem je navrhnout plně automatizovanou test suitu pomocí .NET Core a C#. Běhové prostředí musí být
 kompatibilní s CI/CD.
->
-> Řešení 
 >
 > ## Instalace
 > Dle požadavků je test suita napsána pomocí .NET Core a C#, řešení používá .NET 6. Jako IDE bylo použito Visual Studio i VS Code. 
-> Visual Studio - otevřít AlzaTest.sln
-> VS Code - Open Folder -> AlzaTest a v PS run dotnet build
+> 
+> Visual Studio - instalace probíhá automaticky po otevření AlzaTest.sln
+> 
+> VS Code - je potřeba otevřít složku projektu -> Open Folder -> AlzaTest
+> případně použít příkaz: 
+> * run: dotnet build ./AlzaTest.sln
+>
 > Lokace na GitHubu https://github.com/voigry/AlzaTest.git
 > ## CI/CD
 > V průběhu vývoje byly využity GitHub akce. Projekt byl po každém commit do master sestaven a otestován v prostředí ubuntu s verzí .NET 5.0.x (viz main.yaml). 

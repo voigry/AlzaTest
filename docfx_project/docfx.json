@@ -59,5 +59,31 @@
     "keepFileLink": false,
     "cleanupCacheHistory": false,
     "disableGitFeatures": false
+  },
+  "pdf": {
+    "content": [
+      {
+        "files": [ "obj/api/*.yml" ],
+        "exclude": [ "**/toc.yml" ]
+      },
+      {
+        "files": [ "articles/**/*.md", "*.md", "articles/**/toc.yml", "restapi/**" ]
+      },
+      {
+        "files": [ "pdf/toc.yml" ]
+      }
+    ],
+    "resource": [
+      {
+        "files": [ "articles/images/**"]
+      }
+    ],
+    "overwrite": "specs/*.md",
+    "wkhtmltopdf": {
+      "filePath": "C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe",
+      "additionalArguments": "--enable-local-file-access"
+    },
+    "dest": "_site_pdf",
+    "xrefService": [ "https://xref.docs.microsoft.com/query?uid={uid}" ]
   }
 }
