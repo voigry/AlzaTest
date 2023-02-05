@@ -6,9 +6,9 @@ namespace AlzaTest.Tests
 {
 
     [TestFixture]
-    internal class TestZadaniNegative : AlzaBaseTest
+    internal class TestPositionSoftwareTesterNegative : AlzaBaseTest
     {
-        public TestZadaniNegative() : base()
+        public TestPositionSoftwareTesterNegative() : base()
         {
 
         }

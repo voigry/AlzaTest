@@ -6,9 +6,9 @@ using RestSharp;
 namespace AlzaTest.Tests
 {
     [TestFixture("v2/positions/softwarovy-tester")]
-    internal class TestZadaniPositive : AlzaBaseTest
+    internal class TestPositionSoftwareTesterPositive : AlzaBaseTest
     {
-        public TestZadaniPositive(string segment) : base(segment) { }
+        public TestPositionSoftwareTesterPositive(string segment) : base(segment) { }
 
         [SetUp]
         public void SetUp()
