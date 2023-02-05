@@ -46,6 +46,12 @@ namespace AlzaTest.Tests
         public void TearDown(){
             Logger.Log($"End test: {TestContext.CurrentContext.Test.MethodName}");
         }
+
+        [OneTimeTearDown]
+        public void OneTimeTearDown(){
+            Client.Dispose();
+        }
+        
         public async Task<string> GetJobItemContent(int index)
         {
             return (string)(await GetJobItems())["items"][index]["content"];
