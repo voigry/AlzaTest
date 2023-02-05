@@ -30,10 +30,13 @@ kompatibilní s CI/CD.
 > Při požití country kódu CzechiaCZ se očekává status odpovědi not found, aktuálně se ale vrací Ok.
 >
 > ## Struktura projektu
-> Projekt je rozdělen do několika jmenných prostorů: Models, TestData, Tests a Logging
+> Projekt je rozdělen do několika jmenných prostorů: Client, Models, TestData, Tests a Logging
+>
+> ### Client
+> Implementace RestClient knihovny ResSharp. Je dodrženo doporučené použití, které umožňuje snadné rozšíření (např. v případě zavedení autentizace). 
 > 
 > ### Models
-> Obsahuje interfaces a implementační třídy k vytváření objektů z json obsahu odpovědí a k vytváření testovacích dat.
+> Obsahuje interfaces a třídy k vytváření objektů z json obsahu odpovědí a k vytváření testovacích dat.
 > 
 > ### TestData
 > Zde se nachází samotná testovací data. K plnění dat do testů je zejména využit TestCaseSource. V této ukázce jsou všechny data přístupná přes třídu JobTestCaseData a její property.
