@@ -9,9 +9,12 @@ namespace AlzaTest.Client
     internal class AlzaClient : IDisposable, IAlzaClient
     {
         readonly RestClient _client;
+        private string _baseUrl = "Not Defined";
+        public TestContext? TestContext { get; set; }
         public AlzaClient()
         {
-            var options = new RestClientOptions("https://webapi.alza.cz/api/career/");
+            _baseUrl = TestContext.Parameters["baseUrl"];
+            var options = new RestClientOptions(baseUrl: _baseUrl);
             _client = new RestClient(options);
         }
 

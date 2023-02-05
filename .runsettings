@@ -20,12 +20,12 @@
       </Logger>-->
       <Logger friendlyName="trx" enabled="True">
         <Configuration>
-          <LogFileName>foo.trx</LogFileName>
+          <LogFileName>test_result.trx</LogFileName>
         </Configuration>
       </Logger>
       <Logger friendlyName="html" enabled="True">
         <Configuration>
-          <LogFileName>foo.html</LogFileName>
+          <LogFileName>test_result.html</LogFileName>
         </Configuration>
       </Logger>
     </Loggers>
