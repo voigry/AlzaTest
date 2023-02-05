@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using RestSharp;
 
 namespace AlzaTest.Client
@@ -9,12 +10,9 @@ namespace AlzaTest.Client
     internal class AlzaClient : IDisposable, IAlzaClient
     {
         readonly RestClient _client;
-        private string _baseUrl = "Not Defined";
-        public TestContext? TestContext { get; set; }
         public AlzaClient()
         {
-            _baseUrl = TestContext.Parameters["baseUrl"];
-            var options = new RestClientOptions(baseUrl: _baseUrl);
+            var options = new RestClientOptions(baseUrl: "https://webapi.alza.cz/api/career/");
             _client = new RestClient(options);
         }
 
