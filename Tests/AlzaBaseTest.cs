@@ -42,6 +42,10 @@ namespace AlzaTest.Tests
             Logger.Log($"Running test: {TestContext.CurrentContext.Test.MethodName}");
             Logger.Log($"Running with TestParameters: {TestContext.Parameters}");
         }
+        [TearDown]
+        public void TearDown(){
+            Logger.Log($"End test: {TestContext.CurrentContext.Test.MethodName}");
+        }
         public async Task<string> GetJobItemContent(int index)
         {
             return (string)(await GetJobItems())["items"][index]["content"];
@@ -105,7 +109,7 @@ namespace AlzaTest.Tests
             var resp = await Client.GetJsonAsync<GestorUserHref>(Segment);
             string? gestorUserHref = resp.gestorUser?["meta"]?["href"].ToString();
             User? user = await Client.GetJsonAsync<User>(gestorUserHref);
-            return user;
+            return user!;
         }
         /// <summary>
         /// Get Head of QA
@@ -116,7 +120,7 @@ namespace AlzaTest.Tests
             var resp = await Client.GetJsonAsync<ExecutiveUserHref>(Segment);
             string? executiveUserHref = resp.executiveUser?["meta"]?["href"].ToString();
             User? user = await Client.GetJsonAsync<User>(executiveUserHref);
-            return user;
+            return user!;
         }
         /// <summary>
         /// Get people
@@ -125,15 +129,15 @@ namespace AlzaTest.Tests
         public async Task<Employees> GetPeople()
         {
             var resp = await Client.GetJsonAsync<PeopleHref>(Segment);
-            string? peopleHref = resp.people?["meta"]?["href"].ToString();
-            var jobPositionId = new Uri(peopleHref).Query.Split("=")[1];
+            string? peopleHref = resp.people?["meta"]?["href"]!.ToString();
+            var jobPositionId = new Uri(peopleHref!).Query.Split("=")[1];
             var args = new
             {
                 jobPositionId = jobPositionId
             };
             var employeesHref = (string)(await Client.GetJsonAsync<JsonObject>(GetSegment(peopleHref), args))["meta"]["href"];
 
-            return await Client.GetJsonAsync<Employees>(employeesHref);
+            return (await Client.GetJsonAsync<Employees>(employeesHref!))!;
         }
         /// <summary>
         /// Get segment from Href from initial record
