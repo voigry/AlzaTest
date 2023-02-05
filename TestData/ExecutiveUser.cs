@@ -1,4 +1,6 @@
-﻿namespace AlzaTest.Models
+﻿using AlzaTest.Models;
+
+namespace AlzaTest.TestData
 {
     /// <summary>
     /// Define Head of QA

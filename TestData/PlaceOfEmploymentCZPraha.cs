@@ -1,4 +1,6 @@
-﻿namespace AlzaTest.TestData
+﻿using AlzaTest.Models;
+
+namespace AlzaTest.TestData
 {
     /// <summary>
     /// Define place of employment for CZ Praha Holesovice. 

@@ -1,4 +1,6 @@
-﻿namespace AlzaTest.TestData
+﻿using AlzaTest.Models;
+
+namespace AlzaTest.Test_Data
 {
     /// <summary>
     /// Define test data for position TesterMobilnichAplikaci. Data here are incomplete as given endopoint tester-mobilnich-aplikaci does not return position

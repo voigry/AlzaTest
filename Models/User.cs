@@ -1,5 +1,8 @@
 ﻿namespace AlzaTest.Models
 {
+    /// <summary>
+    /// Class for user deserialization from json
+    /// </summary>
     public class User
     {
         public string? name { get; set; }
