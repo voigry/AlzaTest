@@ -28,6 +28,22 @@ kompatibilní s CI/CD.
 > Zde se testuje nevalidní country code a segment. V obou případech se očekává status odpovědi not found.
 > #### Možné chyby:
 > Při požití country kódu CzechiaCZ se očekává status odpovědi not found, aktuálně se ale vrací Ok.
+>
+> ## Struktura projektu
+> Projekt je rozdělen do několika jmenných prostorů: Models, TestData, Tests a Logging
+> 
+> ### Models
+> Obsahuje interfaces a implementační třídy k vytváření objektů z json obsahu odpovědí a k vytváření testovacích dat.
+> 
+> ### TestData
+> Zde se nachází samotná testovací data. K plnění dat do testů je zejména využit TestCaseSource. V této ukázce jsou všechny data přístupná přes třídu JobTestCaseData a její property.
+>
+> ### Tests
+> Jednotlivé testy včetně base testu se nachází zde.
+>
+> ### Logging
+> Obsahuje implementaci logování.
+> 
 >## Logování
 > Primárně se loguje se pomocí knihovny Log4net, zde je zejména využita možnost kontinuálního logování logů z různých testů do jednoho souboru. 
 > ### Log4net
