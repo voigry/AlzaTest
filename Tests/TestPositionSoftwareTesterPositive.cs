@@ -1,4 +1,5 @@
-﻿using AlzaTest.Deserializers;
+﻿using System.Text.Json.Nodes;
+using AlzaTest.Deserializers;
 using AlzaTest.Logging;
 using AlzaTest.Test_Data;
 using RestSharp;
@@ -56,6 +57,10 @@ namespace AlzaTest.Tests
             Logger.Log($"{executive.Description}");
 
             Assert.That(actualExecutiveUser.name, Is.EqualTo(executive.Name));
+
+            Employees people = await GetPeople();
+            Logger.Log("Assert other Alza employees count is in rang 1 - 20");
+            Assert.That(people.items.Count, Is.InRange(1, 20));
         }
         [Test]
         public async Task JobShouldNotBeSuitableForStudents()
@@ -63,6 +68,23 @@ namespace AlzaTest.Tests
             var isSuitable = await Client.GetJsonAsync<ForStudents>(_segment);
 
             Assert.That(isSuitable?.forStudents, Is.False);
+        }
+        [Test]
+        [TestCaseSource(typeof(JobTestCaseData), nameof(JobTestCaseData.JobItemsSoftwarovyTester))]
+        public async Task CoSeOdTebeOcekava(IJobItems jobItems)
+        {
+            JsonArray ActualWhaIsExpectedFromYou = await GetJobItemSubContent(2);
+
+            AssertJobDescriptions(ActualWhaIsExpectedFromYou, jobItems.WhatIsExpectedFromYou);
+
+        }
+        [Test]
+        [TestCaseSource(typeof(JobTestCaseData), nameof(JobTestCaseData.JobItemsSoftwarovyTester))]
+        public async Task CoBudesMitVsechnoPodPalcemADoCehoJdes(IJobItems jobItems)
+        {
+            JsonArray ActualWhatWilYouDo = await GetJobItemSubContent(1);
+
+            AssertJobDescriptions(ActualWhatWilYouDo, jobItems.WhatWilYouDo);
         }
     }
 }
