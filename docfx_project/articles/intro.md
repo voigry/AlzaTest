@@ -15,12 +15,12 @@ kompatibilní s CI/CD.
 > Test lze spustit pomocí Nunit test runneru. Ve Visual Studiu použijeme Test Explorer. Ve VS Code je k dispozici doplněk .NET Test Explorer. Nebo lze jednoduše použít cli příkaz dotnet test, např: dotnet test --filter "FullyQualifiedName~AlzaTest.Tests.TestZadaniPositive"
 >
 > Na výběr je několik testů. Každý test rozšiřuje třídu AlzaBaseTest. Díky tomu je docíleno snadné rozšiřitelnosti o nové testy a znovu použitelnosti vlastností a metod. 
-> ### Test pozice softwarové tester - positivní testování
+> ### Test pozice softwarový tester - positivní testování
 > Spustí se pomocí příkazu: dotnet test --filter "FullyQualifiedName~AlzaTest.Tests.TestPositionSoftwareTesterPositive"
 > Test obsahuje ověření hodnot pracovní pozice pozice, jako popis a jednotlivé položky pozice, lokace a s kým se aplikant potká na pohovoru.
 > #### Možné chyby:
 > U popisu pozice nesedí velká-malá písmena.
-> ### Test pozice softwarové tester - negativní testování
+> ### Test pozice softwarový tester - negativní testování
 > Spustí se pomocí příkazu: dotnet test --filter "FullyQualifiedName~AlzaTest.Tests.TestPositionSoftwareTesterNegative"
 > Zde se testuje nevalidní country code a segment. V obou případech se očekává status odpovědi not found.
 > #### Možné chyby:

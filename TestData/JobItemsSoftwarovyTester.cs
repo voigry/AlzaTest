@@ -1,4 +1,4 @@
-﻿namespace AlzaTest.Test_Data
+﻿namespace AlzaTest.TestData
 {
     /// <summary>
     /// Define job items for position Softwarovy Tester

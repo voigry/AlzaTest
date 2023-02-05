@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace AlzaTest.Deserializers
+namespace AlzaTest.Models
 {
     internal class Employees
     {

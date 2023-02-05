@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Nodes;
 
-namespace AlzaTest.Deserializers
+namespace AlzaTest.Models
 {
     internal class ExecutiveUserHref
     {

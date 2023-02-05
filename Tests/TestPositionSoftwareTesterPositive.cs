@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Nodes;
-using AlzaTest.Deserializers;
 using AlzaTest.Logging;
-using AlzaTest.Test_Data;
+using AlzaTest.TestData;
+using AlzaTest.Models;
 using RestSharp;
 
 namespace AlzaTest.Tests

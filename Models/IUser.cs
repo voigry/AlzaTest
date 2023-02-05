@@ -1,4 +1,4 @@
-﻿namespace AlzaTest.Test_Data
+﻿namespace AlzaTest.Models
 {
     /// <summary>
     /// Interface for Alza QA team member

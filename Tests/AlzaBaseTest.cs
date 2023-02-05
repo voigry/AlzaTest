@@ -1,5 +1,5 @@
 ﻿using AlzaTest.Client;
-using AlzaTest.Deserializers;
+using AlzaTest.Models;
 using AlzaTest.Logging;
 using HtmlAgilityPack;
 using RestSharp;

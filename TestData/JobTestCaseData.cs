@@ -1,6 +1,7 @@
 ﻿using System.Collections;
+using AlzaTest.Models;
 
-namespace AlzaTest.Test_Data
+namespace AlzaTest.TestData
 {
     public class JobTestCaseData
     {

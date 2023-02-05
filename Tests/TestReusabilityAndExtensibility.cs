@@ -1,5 +1,5 @@
 ﻿using AlzaTest.Logging;
-using AlzaTest.Test_Data;
+using AlzaTest.TestData;
 using RestSharp;
 
 

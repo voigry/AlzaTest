@@ -1,4 +1,4 @@
-﻿namespace AlzaTest.Test_Data
+﻿namespace AlzaTest.TestData
 {
     /// <summary>
     /// Interface for Job items describing given job position

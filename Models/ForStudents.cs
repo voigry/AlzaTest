@@ -1,4 +1,4 @@
-﻿namespace AlzaTest.Deserializers
+﻿namespace AlzaTest.Models
 {
     internal class ForStudents
     {
