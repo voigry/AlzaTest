@@ -1,7 +1,7 @@
 ﻿using AlzaTest.Logging;
 using AlzaTest.Test_Data;
 using RestSharp;
-using System.Text.Json.Nodes;
+
 
 namespace AlzaTest.Tests
 {
@@ -27,7 +27,7 @@ namespace AlzaTest.Tests
         public async Task TestWithNoParam()
         {
             Logger.Log("New Test comment");
-            JsonArray ActualWhatWilYouDo = await GetJobItemSubContent(1);
+            System.Text.Json.Nodes.JsonArray ActualWhatWilYouDo = await GetJobItemSubContent(1);
 
             AssertJobDescriptions(ActualWhatWilYouDo, new JobItemsSoftwarovyTester().WhatWilYouDo);
         }

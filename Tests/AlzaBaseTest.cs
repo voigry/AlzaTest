@@ -4,8 +4,10 @@ using AlzaTest.Logging;
 using HtmlAgilityPack;
 using RestSharp;
 using System.Net;
-using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
+using System.Text.Json.Nodes;
+using System;
+using System.Linq;
 
 namespace AlzaTest.Tests
 {
@@ -18,8 +20,11 @@ namespace AlzaTest.Tests
         public RestClient Client { get; set; }
         public string _segment = string.Empty;
 
-        public AlzaBaseTest() { }
-        public AlzaBaseTest(string segment)
+        public AlzaBaseTest() 
+        {
+            Client = new AlzaClient().Client;
+        }
+        public AlzaBaseTest(string segment) : this()
         {
             _segment = segment;
         }
@@ -33,9 +38,9 @@ namespace AlzaTest.Tests
         [SetUp]
         public void SetUpBase()
         {
-            Client = new AlzaClient().Client;
             Logger.Log($"Start test with baseUrl: {Client.Options.BaseUrl}");
             Logger.Log($"Running test: {TestContext.CurrentContext.Test.MethodName}");
+            Logger.Log($"Running with TestParameters: {TestContext.Parameters}");
         }
         public async Task<string> GetJobItemContent(int index)
         {

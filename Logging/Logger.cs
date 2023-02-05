@@ -1,4 +1,5 @@
 ﻿using log4net;
+using System;
 using System.Globalization;
 
 namespace AlzaTest.Logging

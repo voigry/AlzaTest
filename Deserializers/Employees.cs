@@ -1,4 +1,6 @@
-﻿namespace AlzaTest.Deserializers
+﻿using System.Collections.Generic;
+
+namespace AlzaTest.Deserializers
 {
     internal class Employees
     {

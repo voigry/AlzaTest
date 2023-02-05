@@ -1,4 +1,5 @@
-﻿using AlzaTest.Logging;
+﻿using NUnit.Framework;
+using AlzaTest.Logging;
 using RestSharp;
 
 namespace AlzaTest.Tests
